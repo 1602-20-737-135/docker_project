@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-container-deployment
+spec:
+  replicas: 2  # Number of replicas you want
+  selector:
+    matchLabels:
+      app: python-container
+  template:
+    metadata:
+      labels:
+        app: python-container
+    spec:
+      containers:
+      - name: python-container
+        image: my-python-container  # Replace with your image name (use your Docker image)
+        ports:
+        - containerPort: 80  # Specify the port if needed
+        volumeMounts:
+        - name: data-volume
+          mountPath: /home/data  # Mount the data directory
+      volumes:
+        - name: data-volume
+          hostPath:
+            path: /path/to/data  # Specify the path to the data on your machine
+            type: Directory
